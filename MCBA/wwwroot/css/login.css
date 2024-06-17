@@ -1,0 +1,10 @@
+﻿body {
+    background-image: linear-gradient(to bottom, rgba(11,25,74,1),
+    rgba(11,25,74,0.75)),
+    url('https://images.pexels.com/photos/351264/pexels-photo-351264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    background-color: #cccccc;
+}
+
+h1{
+    color: whitesmoke;
+}

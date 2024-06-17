@@ -1,0 +1,115 @@
+﻿@model MCBA.Models.PayeeViewModel
+@using MCBA.Utils;
+@using MCBA.Enums;
+
+
+@{
+    ViewData["Title"] = "Create new Payee";
+}
+
+<h1>Create new Payee</h1>
+
+<h4>Payee Details</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePayee">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="Name" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    <input asp-for="Name" class="form-control"/>
+                </div>
+                <div class="form-text">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="Address" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    <input asp-for="Address" class="form-control"/>
+                </div>
+                <div class="form-text">
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="City" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    <input asp-for="City" class="form-control"/>
+                </div>
+                <div class="form-text">
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="State" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    @Html.DropDownList("State", Enum.GetValues(typeof(StateEnum))
+                        .Cast<StateEnum>()
+                        .Select(e => new SelectListItem() { Value = e.ToString(), Text = e.GetDisplayName() }))
+                </div>
+                <div class="form-text">
+                    <span asp-validation-for="State" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="PostCode" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    <input asp-for="PostCode" class="form-control"/>
+                </div>
+                <div class="form-text">
+                    <span asp-validation-for="PostCode" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="Phone" class="control-label"></label>
+                </div>
+                <div class="col-9 align-items-end">
+                    <input asp-for="Phone" class="form-control"/>
+                </div>
+                <div class="form-text align-items-end">
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="row align-items-center">
+                <div class="col-5">
+                    <a class="btn btn-danger btn-spacer" asp-action="Index">Back to BillPay</a>
+                </div>
+                <div class="col-3">
+                  
+                </div>
+                <div class="col-4 align-items-end">
+                    <input type="submit" 
+                           value="CreatePayee" 
+                           class="btn btn-primary btn-spacer" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

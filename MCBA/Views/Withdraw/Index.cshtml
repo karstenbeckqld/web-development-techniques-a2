@@ -1,0 +1,47 @@
+@model TransferViewModel
+
+@{
+    ViewData["Title"] = "Deposit";
+}
+
+<div style="max-width: 512px; margin: auto; background-color: white;  margin-top: 5%;" class="ui-shadow">
+    <div style="background: linear-gradient(128.87deg,#7b8aff 14.05%,#7500ff 89.3%); padding: 0.5rem; color: white">
+        @if (Model.AccountType.Equals('S'))
+        {
+            <h1 style="text-align: center; color: white">Withdraw</h1>
+            <p style="text-align: center">@Model.ID / Savings Account</p>
+        }
+
+        @if (Model.AccountType.Equals('C'))
+        {
+            <h1 style="text-align: center; color: white">Withdraw</h1>
+            <p style="text-align: center">@Model.ID / Credit Account</p>
+        }
+    </div>
+
+    <p style="padding: 1rem; padding-bottom: 0!important;">Your current balance is: @Model.Account.Balance.ToString("$#0.00")</p>
+
+    <form asp-controller="Withdraw" asp-action="Index" method="post" style="padding: 1rem">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label for="Amount" class="control-label">Amount</label>
+            <input id="Amount" name="Amount" class="form-control" value="@ViewBag.Amount?.ToString("0.00")"
+                   data-val="true" data-val-number="The field Amount must be a number."
+                   data-val-required="The Amount field is required."/>
+            <span class="text-danger" asp-validation-for="Amount"></span>
+
+            <label for="Comment" class="control-label">Comment</label>
+            <input id="Comment" name="Comment" class="form-control" value="@ViewBag.Comment?.ToString()"
+                   data-val="true" data-val-length="A comment must not exceed 30 characters"/>
+            <span class="text-danger" asp-validation-for="Comment"></span>
+
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+
+        </div>
+        <div class="form-group" style="display: flex; flex-direction: row;">
+            <input type="submit" value="Confirm" class="btn btn-primary btn-spacer-90" style="margin-right: 1rem"/>
+            <a asp-controller="Customer" asp-action="Index" class="btn btn-danger btn-spacer" style="width: 256px">Cancel</a>
+
+        </div>
+    </form>
+</div>

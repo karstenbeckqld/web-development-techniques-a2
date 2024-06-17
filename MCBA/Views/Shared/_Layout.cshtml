@@ -1,0 +1,73 @@
+﻿@using MCBA.Debugbar
+@model dynamic
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - MCBA</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/MCBA.styles.css" asp-append-version="true"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@300;400;600&family=Roboto&display=swap" rel="stylesheet">
+    @if (Debugbar.ShouldRender())
+    {
+        <link href="~/CSS/debugbar.css" rel="stylesheet" type="text/css"/>
+    }
+</head>
+<body>
+
+<ol class="main-menu ui-shadow">
+    <li style="background: linear-gradient(128.87deg,#7b8aff 14.05%,#7500ff 89.3%);">
+
+        @{
+            if (Model != null)
+            {
+                if (Model.CustomerID != null)
+                {
+                    <img src="@Url.Action("DisplayImage", "Customer", new { id = Model.CustomerID })" alt="MCBA" class="navbar-brand center">
+                }
+            }
+        }
+
+
+        <p style="text-align: center; color: white; margin-top: 0; font-size: 1.5rem">Welcome to <strong>MCBA</strong></p>
+    </li>
+    <li>
+        <a href="~/Customer/Index"><img src="~/images/accounts-icon.png" alt="Accounts"> Accounts</a>
+    </li>
+
+    <li>
+        <a href="~/BillPays/Index"><img src="~/images/payee-icon.png" alt="Accounts"> Bill Pay</a>
+    </li>
+
+    <li>
+        <a href="~/"><img src="~/images/logout-icon.png" alt="Logout"> Logout</a>
+    </li>
+
+</ol>
+
+<div style="margin-left: 200px">
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+</div>
+
+@if (Debugbar.ShouldRender())
+{
+    @await Component.InvokeAsync("Debugbar")
+    <script src="~/js/debugbar.js"></script>
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

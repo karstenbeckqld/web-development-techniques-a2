@@ -1,0 +1,96 @@
+﻿
+@using MCBA.Models;
+@model List<Account>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+</div>
+
+<h1>BillPays</h1>
+
+@foreach (Account account in @Model)
+{
+    <h3>Displaying Bills for Account @account.AccountNumber</h3>
+    <table class="table">
+        <tr>
+            <th>BillPayID</th>
+            <th>AccountNumber</th>
+            <th>PayeeID</th>
+            <th>Amount</th>
+            <th>ScheduleDate</th>
+            <th>Period</th>
+            <th>Lock</th>
+        </tr>
+
+        @foreach (BillPay bill in @account.Bills)
+        {
+            <tr>
+                <td>@bill.BillPayID</td>
+                <td>@bill.AccountNumber</td>
+                <td>@bill.PayeeID</td>
+                <td>@bill.Amount.ToString("$#,##0.00")</td>
+                <td>@bill.ScheduleDate.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
+                @{
+                    if (bill.Period == 'O')
+                    {
+                        <td>Once Off</td>
+                    }
+                    else if (bill.Period == 'M')
+                    {
+                        <td>Monthly</td>
+                    }
+                    else if (bill.Period == 'F')
+                    {
+                        <td>Failed to Process Bill </td>
+                    }
+                }
+                <td>
+
+
+                    @if (!bill.LockedPayment)
+                    {
+                        <button class="btn btn-danger button-30 customBtn" id="@bill.BillPayID" onclick="toggleLock(@bill.BillPayID)">Lock Bill</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success button-30 customBtn" id="@bill.BillPayID" onclick="toggleLock(@bill.BillPayID)">Unlock Bill</button>
+                    }
+
+
+
+
+                </td>
+            </tr>
+
+        }
+    </table>
+}
+    <a href="/dashboard" class="btn btn-secondary button-30 customBtn">Back</a>
+
+<script >
+async function toggleLock(id){
+    
+    let uri = "/billpay/"+id+"/lock"; 
+    let button = document.getElementById(id);
+                  
+    const response = await fetch(uri, {
+    method: "POST",})
+                      
+    response.json().then((data)=>{
+    if (data.lockedStatus){
+        button.innerText = "Unlock Bill";
+        button.className = "btn btn-success button-30 customBtn";
+    }else{
+        button.innerText = "Lock Bill";
+        button.className = "btn btn-danger button-30 customBtn";
+    }
+    });
+}
+</script>
+  
+
+          

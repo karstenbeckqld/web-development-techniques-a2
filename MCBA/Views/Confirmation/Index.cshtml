@@ -1,0 +1,72 @@
+@model TransferViewModel
+
+@{
+    ViewData["Title"] = "Confirmation";
+}
+
+<
+<div style="max-width: 512px; margin: auto; background-color: white;  margin-top: 5%;" class="ui-shadow">
+    <div style="background: linear-gradient(128.87deg,#7b8aff 14.05%,#7500ff 89.3%); padding: 0.5rem; color: white">
+        <h1 style="text-align: center; color: white">Transfer Confirmation</h1>
+        <p style="text-align: center">Are you sure you wish to transfer the follow amount?</p>
+
+    </div>
+    <div style="padding: 1rem">
+        <table class="table align-middle text-start">
+            <thead>
+            <tr>
+                <th>To Account</th>
+                <th>From Account</th>
+                <th>Amount</th>
+                <th>Comment</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                @if (Model.ControllerName == "Deposit")
+                {
+                    <td>
+                        @Model.ID.ToString()
+                    </td>
+                    <td></td>
+                }
+                else if (Model.ControllerName == "Transfer")
+                {
+                    <td>@Model.DestinationAccountId</td>
+                    <td>@Model.ID</td>
+                }
+                else if (Model.ControllerName == "Withdraw")
+                {
+                    <td></td>
+                    <td>
+                        @Model.ID.ToString()
+                    </td>
+                }
+                <td>@Model.Amount.ToString($"#0.00")</td>
+                <td>@Model.Comment</td>
+            </tr>
+            </tbody>
+        </table>
+        <p>Do you want to proceed?</p>
+
+        <form asp-controller="Confirmation" asp-action="Index" method="post" enctype="multipart/form-data">
+            <div class="form-group" style="display: flex; flex-direction: row">
+                <input runat="server" type="submit" class="btn btn-primary btn-spacer"
+                       asp-route-controllerName="@Model.ControllerName"
+                       asp-route-sourceAccountNumber="@Model.ID"
+                       asp-route-destinationAccountNumber="@Model.DestinationAccountId"
+                       asp-route-accountType="@Model.AccountType"
+                       asp-route-amount="@Model.Amount"
+                       asp-route-comment="@Model.Comment"
+                       name="value"
+                       id="value"
+                       value="Yes"
+                       multiple/>
+                <input type="submit" class="btn btn-danger btn-spacer" value="No" style="margin-left: 1rem"/>
+
+            </div>
+        </form>
+
+    </div>
+
+</div>

@@ -1,0 +1,187 @@
+﻿@using MCBA.Debugbar
+@using System.Drawing
+@{
+    Layout = null;
+}
+
+<!-- ASP.NET Debugbar created by Jack Harris, design based on Luncardo Debugbar, larvel Debugbar & PHP Debugbar -->
+
+<aside id="debug" class="noPrint">
+    <section id="header">
+        <div id="border"></div>
+        <nav id="debugNavigationContainer">
+            <a href="#" id="logo" class="noClick">ASP.NET | Debugbar</a>
+            <a href="javascript:AspDebugbar.instance.SwitchToView('message')" id="messageButton">Messages 
+                @if (Debugbar.GetMessages().Count > 0)
+                {
+                    <span class="count">@Debugbar.GetMessages().Count</span>
+                    
+                }
+            </a>
+            
+            <a href="javascript:AspDebugbar.instance.SwitchToView('exception')" id="exceptionButton">Exceptions 
+                @if (Debugbar.GetExceptions().Count > 0)
+                {
+                    <span class="count">@Debugbar.GetExceptions().Count</span>
+                }
+            </a>
+            <a href="javascript:AspDebugbar.instance.SwitchToView('queries')" id="queriesButton">Queries 
+                @if (Debugbar.GetQueries().Count > 0)
+                {
+                    <span class="count">@Debugbar.GetQueries().Count</span>
+                }
+            </a>
+            
+            <a href="javascript:AspDebugbar.instance.SwitchToView('request')" id="requestButton">Request</a>
+            
+            <a href="javascript:AspDebugbar.instance.SwitchToView('session')" id="sessionButton">Session  
+                @if (Debugbar.GetSession() != null)
+                {
+                    @if (Debugbar.GetSession().Keys.Count() > 0)
+                    {
+                        <span class="count">ebugbar.GetSession().Keys.Count()</span>
+                    }
+                }
+            </a>
+
+            <a href="#" class="float-right noClick"><>@Debugbar.GetVersion()</a>
+            <a href="#" class="noClick"><img src="~/images/clock-icon.png" alt="Clock Icon">@Debugbar.CalculateRequestDuration()ms</a>
+            <a href="#" class="noClick"><img src="~/images/ram-icon.png" alt="Ram Usage Icon">@Debugbar.GetMemoryUsage()mb</a>
+            <a href="javascript:AspDebugbar.instance.ToggleMinMax()" id="toggleIcon"><img src="~/images/close-icon.png" alt="Toggle Min/Max" id="toggleIconImage"></a>
+        </nav>
+    </section>
+    <div id="contentContainer">
+        <section id="messageContent">
+            
+            <h3>Messages: </h3>
+            <table>
+                @foreach (var message in Debugbar.GetMessages())
+                {
+                    <tr>
+                        <td class="table-left" style="color:@message[3]">@message[1]</td>
+                        <td>@message[0]</td>
+                        <td>@message[2]</td>
+                    </tr>
+                }
+            </table>
+        </section>
+
+        <section id="exceptionContent">
+            <h3>Exceptions: </h3>
+            <table>
+                @foreach (Exception error in Debugbar.GetExceptions())
+                {
+                    <tr>
+                        <td>
+                            <a style="color:cornflowerblue" href="javascript:AspDebugbar.instance.ToggleTableContent('@error.GetHashCode().ToString()')">@error.Message</a>
+                            <div class="table-content" id="@error.GetHashCode().ToString()">
+                                @foreach (var item in @error.StackTrace)
+                                {
+                                    @item
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </section>
+
+        <section id="queriesContent">
+            <h3>Queries: </h3>
+            <table>
+                @foreach (var query in Debugbar.GetQueries())
+                {
+                    <tr>
+                        <td class="table-left">@query[0]</td>
+                        <td>@query[2]</td>
+                    </tr>
+                }
+            </table>
+        </section>
+
+        <section id="requestContent">
+            <h3>Request: </h3>
+            
+            <table>
+                <tr>
+                    <td class="table-left">path_info</td>
+                    <td>@Debugbar.GetRequest().Path</td>
+                </tr>
+                <tr>
+                    <td class="table-left">status_code</td>
+                    <td>@Debugbar.GetResponse().StatusCode</td>
+                </tr>
+                <tr>
+                    <td class="table-left">content_type</td>
+                    <td>@Debugbar.GetResponse().ContentType</td>
+                </tr>
+                <tr>
+                    <td class="table-left">request_headers</td>
+                    <td>
+                        <a style="color:cornflowerblue" href="javascript:AspDebugbar.instance.ToggleTableContent('request_headers')">array:@Debugbar.GetRequest().Headers.Count</a>
+                        <div class="table-content" id="request_headers">
+                            @foreach (var item in @Debugbar.GetRequest().Headers)
+                            {
+                                if (@item.Key != "Cookie")
+                                {
+                                    <span>"</span><span style="color: greenyellow">@item.Key</span><span>" => </span><span style="color:cornflowerblue">@item.Value</span>
+                                }
+                            }
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="table-left">request_cookies</td>
+                    <td>
+                        <a style="color:cornflowerblue" href="javascript:AspDebugbar.instance.ToggleTableContent('request_cookies')">array:@Debugbar.GetRequest().Cookies.Count</a>
+                        <div class="table-content" id="request_cookies">
+                            @foreach (var item in @Debugbar.GetRequest().Cookies)
+                            {
+                                               
+                                <span>"</span><span style="color: greenyellow">@item.Key</span><span>" => </span><span style="color:cornflowerblue">@item.Value</span>
+                            }
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="table-left">response_headers</td>
+                    <td>
+                        <a style="color:cornflowerblue" href="javascript:AspDebugbar.instance.ToggleTableContent('response_headers')">array:@Debugbar.GetResponse().Headers.Count</a>
+                        <div class="table-content" id="response_headers">
+                            @foreach (var item in @Debugbar.GetResponse().Headers)
+                            {
+                               
+                                <span>"</span><span style="color: greenyellow">@item.Key</span><span>" => </span><span style="color:cornflowerblue">@item.Value</span>
+                            }
+                        </div>
+                    </td>
+                </tr>
+                
+                
+            </table>
+
+        </section>
+        
+        <section id="sessionContent">
+           <h3>Session: </h3>
+            <table>
+                @if (Debugbar.GetSession() != null)
+                {
+                    @foreach (var item in Debugbar.GetSession().Keys)
+                    {
+                        <tr>
+                            <td class="table-left">@item</td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            </table>
+            
+        
+        </section>
+    </div>
+
+    
+</aside>

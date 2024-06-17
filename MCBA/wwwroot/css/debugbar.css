@@ -1,0 +1,149 @@
+﻿body #debug .noClick:hover{
+    background-color: transparent;
+    cursor: default;
+}
+
+body #debug .noClick{
+    border-right-color: transparent!important;
+    border-left-color: transparent!important;
+}
+
+body #debug #logo{
+    color: #9780e5;
+    font-family: "Space Grotesk",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    background: linear-gradient(128.87deg,#9780e5 14.05%,#e666cc 89.3%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+body #debug {
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    background-color: #121212; 
+}
+
+body #debug #header {
+    background-color: #1f1f1f;
+    min-height: 2rem;
+    border-top: #222222;
+    border-width: 2px; 
+}
+
+body #debug #header h1 {
+    font-size: 1rem; 
+}
+
+body #debug #header #border {
+    background: linear-gradient(128.87deg,#9780e5 14.05%,#e666cc 89.3%);
+    height: 5px; 
+}
+
+body #debug nav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+body #debug nav a {
+    display: flex;
+    flex-direction: row;
+    padding: 0.25rem 0.5rem;
+    height: inherit;
+    text-decoration: none;
+    color: #f5f5f5;
+    border: 1px solid transparent;
+    border-right-color: rgba(255, 255, 255, 0.2);
+    border-left-color: rgba(255, 255, 255, 0.2);
+}
+body #debug nav a .count {
+    margin-left: 0.5rem;
+    background-color: #9780e5;
+    border-radius: 50%;
+    width: 18px;
+    color: white;
+    text-align: center; 
+}
+
+body #debug nav a:hover {
+    background-color: rgba(0, 0, 0, 0.2); 
+}
+
+body #debug nav a img{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+
+body #debug nav .float-right {
+    margin-left: auto; 
+}
+
+body #debug nav #close-icon {
+    margin-left: 1rem; 
+}
+
+body #debug .active {
+    background-color: #9780e5;
+    color: white; }
+body #debug .active-content .count {
+    background-color: white;
+    color: #9780e5; }
+body #debug .active:hover {
+    background-color: #7965bd; }
+
+body #debug .active-content {
+    background-color: #9780e5!important;
+}
+
+body #debug #contentContainer{
+    overflow: scroll;
+}
+
+body #debug #contentContainer section{
+    padding: 1rem;
+    color:whitesmoke;
+}
+
+body #debug #contentContainer section h3{
+    color: #a3a3a3;
+    padding-bottom: 1rem;
+}
+
+body #debug #contentContainer section table{
+    width: 100%;
+    background-color: #1e1e1e;
+}
+
+body #debug #contentContainer section table tr{
+    padding: 0.5rem;
+}
+
+body #debug #contentContainer section table .table-left{
+    vertical-align:top; 
+    padding-right:10px;
+    width: 10%!important;
+}
+
+body #debug #contentContainer section table tr td{
+    padding: 0.5rem;
+}
+
+body #debug #contentContainer section table tr td .table-content{
+    white-space:pre-line;
+    display: none;
+}
+
+body #debug #contentContainer section table tr:first-child {
+    background-color: #282828;
+}
+body #debug #contentContainer section table tr:nth-child(2n+3){
+    background-color: #252525;
+}
+

@@ -1,0 +1,62 @@
+@model List<MCBA.Models.Customer>
+
+<style>
+    /* Optional CSS for customizing the appearance of the line */
+    hr {
+        border: 2px solid black;
+        margin: 20px 0; /* Add some spacing above and below the line */
+    }
+</style>
+
+@if (Model != null)
+{
+    <ul>
+        <h3>Stored Customer Information:</h3>
+        @foreach (var customer in Model)
+        {
+            <div class="table-responsive">
+                <table class="table align-middle text-start">
+                    <tbody>
+                    <tr>
+                        <td>Customer ID:</td>
+                        <td>@customer.CustomerID</td>
+                    </tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td>@customer.Name</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>@customer.Address</td>
+                    </tr>
+                    <tr>
+                        <td>City:</td>
+                        <td>@customer.City</td>
+                    </tr>
+                    <tr>
+                        <td>State:</td>
+                        <td>@customer.State</td>
+                    </tr>
+                    <tr>
+                        <td>Postcode:</td>
+                        <td>@customer.PostCode</td>
+                    </tr>
+                    <tr>
+                        <td>TFN:</td>
+                        <td>@customer.TFN</td>
+                    </tr>
+                    <tr>
+                        <td>Mobile:</td>
+                        <td>@customer.Mobile</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@customer.CustomerID">Edit</a>
+                <a class="btn btn-primary" asp-controller="BillPay" style="width: 100px" asp-action="Index" asp-route-id="@customer.CustomerID">BillPays</a>
+
+
+                <hr>
+            </div>
+        }
+    </ul>
+}

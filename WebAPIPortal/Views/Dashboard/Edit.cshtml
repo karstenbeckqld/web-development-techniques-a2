@@ -1,0 +1,175 @@
+﻿@using MCBA.Models
+@using MCBA.Utils
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MCBA.Enums
+@model Customer
+
+@{
+    ViewBag.Title = "Edit Customer Account";
+    Layout = "_Layout";
+    
+    string display = "none";
+    string lockButtonText = "Lock Account";
+    string lockButtonClases = "btn btn-danger button-30 customBtn";
+
+    if(Model.login.LockedAccount){
+     display = "block";
+     lockButtonText = "Unlock Account";
+     lockButtonClases = "btn btn-success button-30 customBtn";
+    }    
+    
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<div class="alert alert-danger" role="alert" id="lockedAlert" 
+style="display: @display">
+  This account is currently locked.
+</div>
+
+<form class="editCustomer" asp-action="Edit" method="post" enctype="multipart/form-data">
+       
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CustomerID"/>
+        
+        <div style="display: flex; flex-direction: row">
+             <table class="table align-middle text-start" style="width: 50%">
+             
+                            <tbody>
+                            <tr>
+                                <td colspan="2">
+                                @{
+                                    if (ViewData["outcome"] != null)
+                                    {
+                                        <div class="alert alert-primary" role="alert">
+                                            @ViewData["outcome"]
+                                        </div>
+                                    }
+                                }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label asp-for="Name" class="col-form-label">Name</label>
+                                </td>
+                                <td >
+                                    <input asp-for="Name" class="form-control"/>
+                                    <span class="text-danger" asp-validation-for="Name"></span>
+                                </td>
+                         
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label asp-for="Address" class="col-form-label">Address</label>
+                                </td>
+                                <td>
+                                    <input asp-for="Address" class="form-control"/>
+                                     <span class="text-danger" asp-validation-for="Address"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label asp-for="City" class="col-form-label">City</label>
+                                </td>
+                                <td>
+                                    <input asp-for="City" class="form-control"/>
+                                     <span class="text-danger" asp-validation-for="City"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label asp-for="State" class="col-form-label">State</label>
+                                </td>
+                                <td>
+                                        @Html.DropDownList("State", Enum.GetValues(typeof(StateEnum))
+                                        .Cast<StateEnum>()
+                                        .Where(e => e != StateEnum.NO)
+                                        .Select(e => new SelectListItem() { Value = e.ToString(), Text = e.GetDisplayName() }))
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label asp-for="PostCode" class="col-form-label">PostCode</label>
+                                </td>
+                                <td>
+                                    <input asp-for="PostCode" class="form-control"/>
+                                     <span class="text-danger" asp-validation-for="PostCode"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label asp-for="Mobile" class="col-form-label">Mobile</label>
+                                </td>
+                                <td>
+                                    <input asp-for="Mobile" class="form-control"/>
+                                    <span class="text-danger" asp-validation-for="Mobile"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label asp-for="TFN" class="col-form-label">TFN</label>
+                                </td>
+                                <td>
+                                    <input asp-for="TFN" class="form-control"/>
+                                    <span class="text-danger" asp-validation-for="TFN"></span>
+                                </td>
+                                <td class="table-spacer"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+            <div style="width: 50%">
+                 <h3>Profile Image</h3>
+                 @if (Model.ProfilePicture != null)
+                 {
+                     <img style="width: 256px" src="/Home/Edit/@Model.CustomerID/Image" class="profileImage" alt="Profile image" id="DisplayImg" />
+                     // setting HiddenFor value to act as a "default value if nothing is uploaded"
+                     @Html.HiddenFor(x => x.ProfilePicture)
+                 }else{
+                     <p>Profile image not set.</p>
+                 }
+                 @Html.ValidationMessage("ImageUploadFailed", new { @class = "text-danger" })
+            </div>
+        </div>
+          <tr>
+                            
+          <td class="table-spacer" colspan="5">
+            <input type="submit" value="Save" class="btn btn-primary button-30 customBtn"/>
+          </td>
+                                        
+          <td class="table-spacer" colspan="5">
+            <a href="/dashboard" class="btn btn-secondary button-30 customBtn">Back</a>
+          </td>
+          
+          <script >
+          
+          async function toggleLock(){
+              let uri = "/home/edit/@Model.CustomerID/lock"; 
+              let button = document.getElementById("lockAccountButton");
+              let lockedAlert = document.getElementById("lockedAlert");
+              
+              const response = await fetch(uri, {
+                  method: "POST",})
+                  
+              response.json().then((data)=>{
+                  if (data.lockedStatus){
+                      button.innerText = "Unlock Account";
+                      button.className = "btn btn-success button-30 customBtn";
+                      lockedAlert.style.display = "block";
+                  }else{
+                      button.innerText = "Lock Account";
+                      button.className = "btn btn-danger button-30 customBtn";
+                      lockedAlert.style.display = "none";
+                  }
+              });
+          }
+          
+</script>
+          
+           <td class="table-spacer" colspan="5">
+                      <a href="javascript:toggleLock()" class="@lockButtonClases" id="lockAccountButton">@lockButtonText</a>
+           </td>
+          
+                                       
+          </tr>
+        </form>

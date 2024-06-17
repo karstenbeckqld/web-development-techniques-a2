@@ -1,0 +1,181 @@
+﻿@using MCBA.Enums;
+@using System.Web;
+@using System.Data
+@using MCBA.Utils;
+@model Customer
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="page">
+    <div class="header ui-shadow">
+        <div style="display: flex;flex-direction: row; justify-content: space-between">
+            <div>
+                <h1>Edit Account for @Model.Name</h1>
+                <p>Edit and customize your MCBA account!</p>
+            </div>
+            <div style="padding: 0 1rem 1rem;">
+                <a asp-controller="Customer" asp-action="Details" class="btn btn-primary customBtn" style="width: 256px" asp-route-id="@Model.CustomerID">Back</a>
+            </div>
+        </div>
+        <hr>
+        <form class="editCustomer" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CustomerID"/>
+        
+            <table class="table align-middle text-start">
+                <tbody>
+                <tr>
+                    <td>
+                        <label asp-for="Name" class="col-form-label">Name</label>
+                    </td>
+                    <td >
+                        <input asp-for="Name" class="form-control"/>
+                        <span class="text-danger" asp-validation-for="Name"></span>
+                    </td>
+                    <td class="table-spacer"></td>
+                    <td class="table-spacer table-spacer-right"></td>
+                    <td class="no-border">
+                        <h3>Profile Image</h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Address" class="col-form-label">Address</label>
+                    </td>
+                    <td>
+                        <input asp-for="Address" class="form-control"/>
+                         <span class="text-danger" asp-validation-for="Address"></span>
+                    </td>
+                    <td class="table-spacer"></td>
+                    <td class="table-spacer table-spacer-right"></td>
+                    <td class="no-border" rowspan="5">
+                        @if (Model.ProfilePicture != null)
+                        {
+                            @*<img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" id="image" class="profileImage" alt="Profile image">*@
+                                <img src="@Url.Action("DisplayImage", "Customer", new{id = Model.CustomerID})" class="profileImage" alt="Profile image" id="DisplayImg" />
+
+                            // setting HiddenFor value to act as a "default value if nothing is uploaded"
+                            @Html.HiddenFor(x => x.ProfilePicture)
+                        }
+                        @Html.ValidationMessage("ImageUploadFailed", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="City" class="col-form-label">City</label>
+                    </td>
+                    <td>
+                        <input asp-for="City" class="form-control"/>
+                         <span class="text-danger" asp-validation-for="City"></span>
+                    </td>
+                    <td class="table-spacer"></td>
+                    <td class="table-spacer table-spacer-right"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="State" class="col-form-label">State</label>
+                    </td>
+                    <td>
+                            @Html.DropDownList("State", Enum.GetValues(typeof(StateEnum))
+                            .Cast<StateEnum>()
+                            .Where(e => e != StateEnum.NO)
+                            .Select(e => new SelectListItem() { Value = e.ToString(), Text = e.GetDisplayName() }))
+                    </td>
+                    <td class="table-spacer"></td>
+                    <td class="table-spacer table-spacer-right"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="PostCode" class="col-form-label">PostCode</label>
+                    </td>
+                    <td>
+                        <input asp-for="PostCode" class="form-control"/>
+                         <span class="text-danger" asp-validation-for="PostCode"></span>
+                    </td>
+                    <td class="table-spacer"></td>
+                    <td class="table-spacer table-spacer-right"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Mobile" class="col-form-label">Mobile</label>
+                    </td>
+                    <td>
+                        <input asp-for="Mobile" class="form-control"/>
+                        <span class="text-danger" asp-validation-for="Mobile"></span>
+                    </td>
+                    <td class="table-spacer"></td>
+                    <td class="table-spacer table-spacer-right"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="TFN" class="col-form-label">TFN</label>
+                    </td>
+                    <td>
+                        <input asp-for="TFN" class="form-control"/>
+                        <span class="text-danger" asp-validation-for="TFN"></span>
+                    </td>
+                    <td class="table-spacer"></td>
+                    <td class="table-spacer table-spacer-right"></td>
+                    <td class="no-border">
+
+                            <input asp-for="ProfilePicture" class="form-control fileInput" type="file" id="ProfileImg" />
+                            <button type="submit" class="btn btn-danger button-30" value="delete" asp-route-value="delete" style="margin-top: 20px;">Delete Image</button>
+              
+                    </td>
+                </tr>
+                <tr>
+        
+                    <td class="table-spacer" colspan="5">
+                        <input type="submit" value="Save" class="btn btn-primary button-30 customBtn"/>
+                    </td>
+        
+        
+                </tr>
+        
+        
+                </tbody>
+            </table>
+        
+        </form>
+    </div>
+</div>
+@section Scripts {
+    
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+        window.onload = function () {
+            console.log("here");
+            let displayImg = document.getElementById("DisplayImg");
+            let input = document.getElementById("ProfileImg");
+
+            input.addEventListener("input", function () {
+                console.log("here2");
+                changeDisplay();
+            });
+
+
+            function changeDisplay() {
+
+                var input = document.getElementById('ProfileImg');
+                var displayImg = document.getElementById("DisplayImg");
+                if (input.files && input.files[0]) {
+
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        // Change the source of the image tag
+                        displayImg.src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+
+                }
+            }
+        }
+    </script>
+}

@@ -1,0 +1,45 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_LoginLayout";
+}
+
+<div class="col-4" style="margin: auto; position: absolute;top: 50%; left:  50%;
+                                             transform: translate(-50%, -50%);">
+    <h1 style="text-align: center">Log in to e-banking</h1>
+    <p style="text-align: center" class="subheading">Reinventing the digital banking experience since 2023!</p>
+    <form asp-controller="Login" asp-action="Login" method="post">
+        <div class="row align-items-center">
+
+            <div class="col-8" style="margin: auto">
+                <label asp-for="LoginID" class="col-form-label">Access ID</label>
+                <input asp-for="LoginID" class="form-control"/>
+            </div>
+            <div class="form-text">
+                <span asp-validation-for="LoginID" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-8" style="margin: auto">
+                <label asp-for="PasswordHash" class="col-form-label">Password</label>
+                <input asp-for="PasswordHash" class="form-control" type="password"/>
+            </div>
+            <div class="form-text">
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-8" style="margin: auto; margin-top: 32px">
+                <input type="submit" value="Login" class="btn btn-primary customBtn"/>
+            </div>
+        </div>
+        @Html.ValidationMessage("LoginFailed", new { @class = "text-danger" })
+    </form>
+</div>
+
+@section Scripts
+{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,170 @@
+@model TransactionsViewModel
+
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@{
+    ViewData["Title"] = "Statements";
+    string accountType;
+    if (@Model.Accounts[0].AccountType.Equals('S'))
+    {
+        accountType = "Savings";
+    }
+    else
+    {
+        accountType = "Credit";
+    }
+}
+
+<div id="statement-page" class="page">
+    <div class="header ui-shadow">
+        <div style="display: flex;flex-direction: row; justify-content: space-between">
+            <div>
+                <h1>Account Statement</h1>
+                <p>@accountType Account / @Model.AccountNumber</p>
+            </div>
+            <div style="padding: 0 1rem 1rem;">
+                <a asp-controller="Customer" asp-action="Index" class="btn btn-primary customBtn" style="width: 256px">Back to Account Overview</a>
+            </div>
+        </div>
+        <hr class="hr"/>
+        <div id="balance-container">
+            <div>
+                <h3 style="color: mediumseagreen">@Model.Accounts[0].GetAvailableBalance().ToString("$#0.00")</h3>
+                <h5>Available Balance</h5>
+            </div>
+            <div>
+                <h3>@Model.Accounts[0].Balance.ToString("$#0.00")</h3>
+                <h5>Current Balance</h5>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div style="background-color: white; margin:  1rem; padding: 1rem;" class="ui-shadow">
+        <h2>Chart</h2>
+        <hr class="hr"/>
+        <canvas id="line-chart" style="max-height: 200px"></canvas>
+        <p style="text-align: center" id="line-chart-error">Chart not supported with current ordering type.</p>
+    </div>
+
+    <script
+        src="~/js/ChartJS4-3-3.js"></script>
+    <script>
+
+    async function loadTransactions() {
+      const response = await fetch("./GetByPage?accountNumber=@Model.AccountNumber&page=@Model.Page&sortOrder=@Model.SortOrder");
+      let names = await response.json();
+      
+      const balanceResponse = await fetch("./GetBalanceUptoPage?accountNumber=@Model.AccountNumber&page=@Model.Page&sortOrder=@Model.SortOrder")
+      let startingBalance = await balanceResponse.json();
+            
+      let data = [];
+      let labels = [];
+      let currentBalance = startingBalance;
+      let sortOrder = "@Model.SortOrder";
+      
+      let chart = document.getElementById("line-chart");
+      let chartError = document.getElementById("line-chart-error");
+                  
+      if (sortOrder !== "date_desc"){
+      
+      let count  = 0;
+      names.forEach((n)=>{
+          
+          if(n.transactionType === "D"){
+              
+            currentBalance += n.amount;
+            
+          }else if (n.transactionType === "T" && n.destinationAccountNumber === null){
+              currentBalance += n.amount;
+          }else{
+             currentBalance -= n.amount;
+          }
+          labels[count] = n.transactionTimeUTC.split("T")[0];
+          data[count] = currentBalance;
+          count++;
+      });
+      
+      
+        new Chart(document.getElementById("line-chart"), {
+        		type : 'line',
+        		data : {
+        			labels : labels,
+        			datasets : [
+        					{
+        						data : data,
+        						label : "Account @Model.AccountNumber",
+        						borderColor :'#51579d',
+        						fill : false
+        					}]
+        		},
+        		options : {
+                    legend: {
+                            display: false
+                        },
+        			title : {
+        				display : true,
+        				text : 'Chart JS Line Chart Example'
+        			}
+                    }
+        	});
+       
+        
+        
+        chart.style.display = "block";
+        chartError.style.display = "none";   
+        }else{
+            chart.style.display = "none";   
+              chartError.style.display = "block";   
+      }
+      
+    }
+    
+    loadTransactions();
+
+	
+</script>
+    <div style="background-color: white; margin:  1rem; padding: 1rem;" class="ui-shadow">
+        <h2>Transactions</h2>
+        <hr class="hr"/>
+        <div class="table-responsive">
+            <table class="table align-middle text-start">
+                <thead>
+                <tr>
+                    <th>Transaction ID</th>
+                    <th>Transaction Type</th>
+                    <th>Account No.</th>
+                    <th>Destination Account No.</th>
+                    <th class="text-end">Amount</th>
+                    <th> @Html.ActionLink("Transaction Time", "Index", new { sortOrder = ViewBag.DateSortParm, accountNumber = Model.AccountNumber })&#8645;</th>
+                    <th class="comment">Comment</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                @foreach (var item in Model.Transactions)
+                {
+                    <tr>
+                        <td>@item.TransactionID</td>
+                        <td>@item.TransactionType</td>
+                        <td>@item.AccountNumber</td>
+                        <td>@item.DestinationAccountNumber</td>
+                        <td class="text-end">@item.Amount.ToString("$#,##0.00")</td>
+                        <td>@item.TransactionTimeUTC.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
+                        <td>@item.Comment</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <div class="pull-right">
+            @Html.PagedListPager((IPagedList)Model.Transactions, page => Url.Action("Index", new { accountNumber = Model.Accounts[0].AccountNumber, page, Model.SortOrder }), Bootstrap4PagedListRenderOptions.Default)
+        </div>
+    </div>
+
+</div>

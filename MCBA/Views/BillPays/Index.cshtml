@@ -1,0 +1,91 @@
+﻿@model MCBA.Models.Customer
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page">
+    <div class="header ui-shadow">
+        <div style="display: flex;flex-direction: row; justify-content: space-between">
+            <div>
+                <h1>BillPay Overview</h1>
+                <p>Edit and manage your recurring bills here!</p>
+            </div>
+            <div style="padding: 0 1rem 1rem;">
+                <a asp-controller="Customer" asp-action="Index" class="btn btn-primary customBtn" style="width: 256px" asp-route-id="@Model.CustomerID">Back</a>
+            </div>
+        </div>
+        <hr>
+
+        <p>
+            <a class="btn btn-primary" asp-action="Create" asp-route-customerId="@Model.CustomerID">Create New Bill</a>
+        </p>
+
+        @foreach (var account in Model.Accounts)
+        {
+            <table class="table">
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].Bills[0].BillPayID)</th>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].Bills[0].AccountNumber)</th>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].Bills[0].PayeeID)</th>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].Bills[0].Amount)</th>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].Bills[0].ScheduleDate)</th>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].Bills[0].Period)</th>
+
+                    <th></th>
+                </tr>
+                <h3>Displaying Bills for Account @account.AccountNumber</h3>
+
+
+                @foreach (var bill in account.Bills)
+                {
+                    <tr style="background:@(bill.Period == 'F' ? "red; font-weight:bold;" : "None");">
+
+                        <td>@bill.BillPayID</td>
+                        <td>@bill.AccountNumber</td>
+                        <td>@bill.payee.Name</td>
+                        <td>@bill.Amount.ToString("$#,##0.00")</td>
+                        <td>@bill.ScheduleDate.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
+
+                        @{
+                            if (bill.Period == 'O')
+                            {
+                                <td>Once Off</td>
+                            }
+                            else if (bill.Period == 'M')
+                            {
+                                <td>Monthly</td>
+                            }
+                            else if (bill.Period == 'F')
+                            {
+                                <td>Failed to Process Bill </td>
+                            }
+                        }
+
+                        @if (bill.LockedPayment)
+                        {
+                            <td>
+                                <a class="btn btn-warning btn-edit" >Blocked</a>
+                                <a class="btn btn-primary" asp-action="Delete" asp-route-id="@bill.BillPayID" asp-route-CustomerID="@Model.CustomerID">Delete</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a class="btn btn-primary btn-edit" asp-action="Edit" asp-route-id="@bill.BillPayID" asp-route-CustomerID="@Model.CustomerID">Edit</a>
+                                <a class="btn btn-primary" asp-action="Delete" asp-route-id="@bill.BillPayID" asp-route-CustomerID="@Model.CustomerID">Delete</a>
+                            </td>
+                        }
+
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

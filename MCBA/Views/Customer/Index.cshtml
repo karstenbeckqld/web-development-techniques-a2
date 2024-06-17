@@ -1,0 +1,88 @@
+@model MCBA.Models.Customer
+
+@{
+    ViewData["Title"] = "Accounts";
+}
+
+<div class="page">
+    <div class="header ui-shadow">
+        <div style="display: flex;flex-direction: row; justify-content: space-between">
+            <div>
+                <h1>Welcome @Model.Name</h1>
+                <p>Customer ID / @Model.CustomerID</p>
+            </div>
+            <div style="padding: 0 1rem 1rem;">
+                <a asp-controller="Customer" asp-action="Details" class="btn btn-primary customBtn" style="width: 256px" asp-route-id="@Model.CustomerID">My Account</a>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; flex-direction: row;">
+        <div style="width: 75%; background-color: white; padding: 1rem; margin: 1rem; margin-top: 0!important;" class="ui-shadow">
+            <h2>Accounts</h2>
+            <hr class="hr"/>
+
+            <table class="table">
+                <tr>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].AccountNumber)</th>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].AccountType)</th>
+                    <th>@Html.DisplayNameFor(x => x.Accounts[0].Balance)</th>
+                    <th></th>
+                </tr>
+                @foreach (var account in Model.Accounts)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => account.AccountNumber)</td>
+                        <td>@Html.DisplayFor(x => account.AccountType)</td>
+                        <td>@Html.DisplayFor(x => account.Balance)</td>
+                        <td style="display: flex; flex-direction: row; justify-content: space-between">
+                            <a class="btn btn-primary" asp-controller="Deposit" style="width: 100px" asp-action="Index" asp-route-id="@account.AccountNumber">Deposit</a>
+                            <a class="btn btn-primary" asp-controller="Withdraw" asp-action="Index" asp-route-id="@account.AccountNumber">Withdraw</a>
+                            <a class="btn btn-primary" asp-controller="Transfer" asp-action="Index" asp-route-id="@account.AccountNumber">Transfer</a>
+                            <a class="btn btn-primary" asp-controller="Statement" asp-action="Index" asp-route-accountNumber="@account.AccountNumber">Statements</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <div style="width: 25%; background-color: white; padding: 1rem; margin: 1rem; margin-top: 0!important; margin-left: 0!important;" class="ui-shadow">
+            <h2>Recent Transactions</h2>
+            <hr class="hr"/>
+            <div id="transactions-container"></div>
+        </div>
+
+        <script >
+        async function f() {
+          let transactionsContrainer = document.getElementById("transactions-container");
+          
+          const response = await fetch("/Statement/MostRecent?accountNumber=@Model.Accounts.ToArray()[0].AccountNumber&limit=5");
+          
+          let transactions = await response.json();
+          
+          transactions.forEach((n)=>{
+              
+              let type = "";
+              
+              switch(n.transactionType) {
+                case "D":
+                  type = "Deposit";
+                  break;
+                case "T":
+                  type = "Transfer";
+                  break;
+                case "S":
+                   type = "Service Charge";
+                   break;            
+                default: 
+                  type = "Withdraw";
+              } 
+              
+              let p = document.createElement("p");
+              p.innerText = type+" $"+n.amount+" on "+n.transactionTimeUTC.split("T")[0];
+               transactionsContrainer.appendChild(p);
+          })
+        }
+        
+        window.addEventListener("load",f);
+        </script>
+    </div>
+</div>

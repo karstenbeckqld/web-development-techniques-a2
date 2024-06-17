@@ -1,0 +1,188 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/WebAPIPortal/WebAPIPortal.csproj": {}
+  },
+  "projects": {
+    "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/MCBA/MCBA.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/MCBA/MCBA.csproj",
+        "projectName": "MCBA",
+        "projectPath": "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/MCBA/MCBA.csproj",
+        "packagesPath": "/Users/karstenbeck/.nuget/packages/",
+        "outputPath": "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/MCBA/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/karstenbeck/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Magick.NET-Q8-x64": {
+              "target": "Package",
+              "version": "[13.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Microsoft.Extensions.Caching.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "Serilog.Extensions.Logging.File": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "SimpleHashing.Net": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "X.PagedList.Mvc.Bootstrap4": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "X.PagedList.Mvc.Core": {
+              "target": "Package",
+              "version": "[8.4.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/karstenbeck/.dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/WebAPIPortal/WebAPIPortal.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/WebAPIPortal/WebAPIPortal.csproj",
+        "projectName": "WebAPIPortal",
+        "projectPath": "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/WebAPIPortal/WebAPIPortal.csproj",
+        "packagesPath": "/Users/karstenbeck/.nuget/packages/",
+        "outputPath": "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/WebAPIPortal/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/karstenbeck/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/MCBA/MCBA.csproj": {
+                "projectPath": "/Users/karstenbeck/Downloads/s3909581-s3893749-s3912792-a2-main/MCBA/MCBA.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/karstenbeck/.dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

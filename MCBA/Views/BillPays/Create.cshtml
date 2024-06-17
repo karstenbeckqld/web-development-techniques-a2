@@ -1,0 +1,104 @@
+﻿
+@using MCBA.Enums;
+@using MCBA.Utils;
+
+@model MCBA.Models.BillPayViewModel
+
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>BillPay</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="AccountNumber" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    <select asp-for="AccountNumber" class="form-control" asp-items="ViewBag.AccountNumber"></select>
+                </div>
+
+            </div>
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="PayeeID" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    <select asp-for="PayeeID" class="form-control" asp-items="ViewBag.PayeeID"></select>
+                    <a class="btn btn-primary btn-spacer" asp-action="CreatePayee" asp-route-customerId="@Model.CustomerID">Create New Payee</a>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="Amount" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    <input asp-for="Amount" class="form-control"/>
+                </div>
+                <div class="form-text">
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="ScheduleDate" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    <input asp-for="ScheduleDate" class="form-control"/>
+                </div>
+                <div class="form-text">
+                    <span asp-validation-for="ScheduleDate" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label asp-for="Period" class="control-label"></label>
+                </div>
+                <div class="col-9">
+                    @Html.DropDownList("Period", Enum.GetValues(typeof(billPayEnum))
+                        .Cast<billPayEnum>()
+                        .Select(e => new SelectListItem() { Value = e.ToString(), Text = e.GetDisplayName() }))
+                </div>
+                <div class="form-text">
+                    <span asp-validation-for="Period" class="text-danger"></span>
+                </div>
+
+
+            </div>
+
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+
+            <div class="row align-items-right">
+                <div class="col-8"></div>
+                <div class="col-4">
+                    <input type="submit" value="Create" class="btn btn-primary customBtn"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-action="Index">Back to Dashboard</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

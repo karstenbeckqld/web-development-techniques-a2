@@ -1,0 +1,277 @@
+html {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    background-color: #f2f2f2 !important;
+}
+
+h1{
+    color: #575757;
+}
+
+h2{
+    font-size: 1.5rem;
+}
+
+.main-menu{
+    position: fixed;
+    left:0;
+    top:0;
+    background-color: #2f325d;
+    height: 100vh;
+    z-index: 0.5;
+    padding-left: 0!important;
+    width: 200px;
+}
+
+.main-menu{
+    list-style: none;
+}
+
+.main-menu li{
+    padding: 1rem;
+}
+
+.main-menu li .navbar-brand{
+    width: 64px;
+}
+
+.main-menu li a{
+    width: inherit;
+    height: inherit;
+    text-decoration: none;
+    color: #bdbdbd;
+}
+
+.main-menu li:hover{
+    background-color: #3f4067;
+}
+
+
+.main-menu li a img{
+    width: 24px;
+    height: 24px;
+}
+.navbar-brand{
+    color: whitesmoke;
+}
+
+.navbar-brand img{
+    width: 64px!important;
+}
+
+.error {
+    color: red;
+}
+
+.center{
+    margin: auto; 
+    position: relative;
+    left:  50%;
+    transform: translate(-50%);
+}
+
+.form-control{
+    border: 1px solid transparent;
+    background-color:#8a8471;
+    margin-top: 10px;
+}
+
+.col-form-label{
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #cecece;
+}
+
+select{
+    word-wrap: normal;
+    border: 1px solid #123456;
+    padding: 8px;
+    background-color: #0d6efd;
+    color: #fff;
+    border-radius: 20px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.customBtn{
+    /*width: 100%;*/
+    margin: 20px 0;
+    background: linear-gradient(128.87deg,#7b8aff 14.05%,#7500ff 89.3%);
+    border-color: transparent !important;
+}
+
+.customBtnWarning{
+    width: 100%;
+    margin: 20px 0;
+    background: linear-gradient(128.87deg, #ffbd7b 14.05%,#ffa200 89.3%);
+    border-color: transparent !important;
+}
+
+.customBtnDanger{
+    width: 100%;
+    margin: 20px 0;
+    background: linear-gradient(128.87deg, #ff7b7b 14.05%,#ff2200 89.3%);
+    border-color: transparent !important;
+}
+
+
+.subheading{
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #6177a8;
+}
+
+.button-30{
+    width: 33%;
+   margin-right: 0;
+    border-radius: 20px;
+}
+
+.place{
+    background-color: #6610f2;
+    width: 100%;
+    height: 100%;
+}
+
+.profileImagePreview{
+    width: 120px;
+    height: 120px;
+    margin: 40px auto 0 35%;
+}
+
+.form-control::file-selector-button{
+    background: linear-gradient(128.87deg,#7b8aff 14.05%,#7500ff 89.3%);
+    color: #ffffff;
+}
+
+.form-control::file-selector-button :hover{
+    background-color: #0b5ed7;
+}
+
+.loginImage{
+    width: 150px;
+    margin: 0 auto 40px auto;
+}
+
+.transactionsHeader{
+    margin-bottom: 40px;
+}
+
+.comment{
+    width: 150px;
+}
+
+.paging{
+    margin-bottom: 40px;
+}
+
+.pageText{
+    padding-top: 5px;
+    font-size: 1.2em;
+}
+
+.adjust{
+    width: 70px;
+}
+
+.left-border{
+    border-left: 1px solid #0045d7;
+    padding-left: 40px;
+}
+
+.table-spacer {
+    width: 10%;
+    border-bottom: none;
+}
+
+.table-spacer-30 {
+    width: 33%;
+    border-bottom: none;
+}
+
+.table-spacer-right{
+    border-left: 1px solid #0045d7;
+}
+
+.field{
+    margin-right: 20%;
+}
+
+.profileImage{
+    max-width: 400px;
+    max-height: 400px;
+    height: auto;
+    width: auto;
+}
+
+.no-border{
+    border: none;
+}
+
+.fileInput{
+    width: 400px;
+}
+
+.page .header{
+    margin: 1rem;
+    padding: 1rem;
+    background-color: white;
+}
+
+#statement-page .header #balance-container{
+    display: flex;
+    flex-direction: row;
+}
+
+#statement-page .header #balance-container div{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    text-align: center;
+}
+
+#statement-page .header #balance-container div h5{
+   color: #7a7a7a;
+}
+
+.ui-shadow{
+    filter: drop-shadow(2px 5px 10px rgba(0, 0, 0, 0.25));
+}
+
+.btn-spacer{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.btn-spacer-90{
+    margin-top: 10px;
+    width: 90%;
+}
+.btn-edit{
+    width: 80px;
+    cursor: default;
+}

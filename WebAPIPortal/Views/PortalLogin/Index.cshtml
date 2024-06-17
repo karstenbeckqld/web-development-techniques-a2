@@ -1,0 +1,26 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4 title">Admin Portal</h1>
+</div>
+
+
+<form asp-action="Index" method="post">
+    
+    <div class="form-group row formRow">
+        <label for="Username">Username:</label>
+        <input class="form-control" type="text" id="Username" name="username" required>
+    </div>
+
+    <div class="form-group row formRow">
+        <label for="Password">Password:</label>
+        <input class="form-control" type="password" id="Password" name="password" required>
+    </div>
+
+    <div class="form-group row formRow">
+        <button class="btn btn-primary" type="submit">Login</button>
+    </div>
+
+</form>
